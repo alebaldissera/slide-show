@@ -9,7 +9,7 @@
 class SlideCreator
 {
 private:
-    std::pair<int, int> getImageSize(const string& path) const;
+    static std::pair<int, int> getImageSize(const string& path);
 public:
     /**
       * @brief factory per la creazioen di MonoSlide
@@ -17,7 +17,7 @@ public:
       * @return la slide che rappresenta i parametri
       * @throw std::runtime_error
       */
-    MonoSlide* createSlide(string& path) const;
+    static MonoSlide* createSlide(string& path);
 
     /**
       * @brief factory per la composizione di slide composte
@@ -25,7 +25,7 @@ public:
       * @param sencondSlide : seconda slide da aggiungere
       * @return la MultiSlide contenente le slide di input
       */
-    MultiSlide* composeSlide(Slide* firstSlide, Slide* secondSlide, bool horizontal = true) const;
+    static MultiSlide* composeSlide(Slide* firstSlide, Slide* secondSlide, bool horizontal = true);
 };
 
 #endif // SLIDECREATOR_H

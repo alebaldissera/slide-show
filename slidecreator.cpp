@@ -1,6 +1,6 @@
 #include "slidecreator.h"
 
-std::pair<int, int> SlideCreator::getImageSize(const string& path) const {
+std::pair<int, int> SlideCreator::getImageSize(const string& path) {
     FILE* f = fopen(path.c_str(), "rb");
         if (f == 0) throw std::runtime_error("File non esistente");
         fseek(f, 0, SEEK_END);
@@ -57,12 +57,12 @@ std::pair<int, int> SlideCreator::getImageSize(const string& path) const {
         throw std::runtime_error("File non corretto");
 }
 
-MonoSlide* SlideCreator::createSlide(string &path) const{
+MonoSlide* SlideCreator::createSlide(string &path){
     auto dims = getImageSize(path);
     return new MonoSlide(path, dims.first, dims.second);
 }
 
-MultiSlide* SlideCreator::composeSlide(Slide *firstSlide, Slide *secondSlide, bool horizontal) const{
+MultiSlide* SlideCreator::composeSlide(Slide *firstSlide, Slide *secondSlide, bool horizontal){
     MultiSlide* slide = new MultiSlide(horizontal);
     slide->addSlide(firstSlide);
     slide->addSlide(secondSlide);
