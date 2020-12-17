@@ -10,25 +10,26 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
     model.cpp \
     monoslide.cpp \
     multislide.cpp \
     slide.cpp \
     slidecreator.cpp \
-    slideshow.cpp
+    slidescreen.cpp \
+    slideshow.cpp \
+    slidesviewer.cpp
 
 HEADERS += \
-    mainwindow.h \
     model.h \
     monoslide.h \
     multislide.h \
     slide.h \
     slidecreator.h \
-    slideshow.h
+    slidescreen.h \
+    slideshow.h \
+    slidesviewer.h
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

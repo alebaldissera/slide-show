@@ -5,6 +5,11 @@ MonoSlide::MonoSlide(const string& path, u_int max_w, u_int max_h): image_path(p
 
 }
 
+std::string MonoSlide::getPath() const
+{
+    return image_path;
+}
+
 u_int MonoSlide::getMaxHeight() const {
     return max_height;
 }
