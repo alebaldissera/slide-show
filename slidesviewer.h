@@ -25,12 +25,33 @@
 #include <utility>
 #include <string>
 
+class Controller;
+
 class SlidesViewer : public QWidget
 {
     Q_OBJECT
 private:
     QMenuBar *createMenu();
     SlideScreen *screen;
+
+    Controller *controller;
+
+    QAction *inizio;
+    QAction *precedente;
+    QAction *successivo;
+    QAction *fine;
+    QAction *autoplay;
+
+    QAction *aggiungi;
+    QAction *rimuovi;
+    QAction *unisci;
+
+    QPushButton *inizioB;
+    QPushButton *precedenteB;
+    QPushButton *successivoB;
+    QPushButton *fineB;
+    QPushButton *autoplayB;
+
 
 public:
     explicit SlidesViewer(QWidget *parent = nullptr);
@@ -41,6 +62,8 @@ public:
     std::pair<int, int> showMergeDialog();
 
     void showSlide(Slide *slide, u_int value, u_int limit);
+
+    void setController(Controller *c);
 
 signals:
 

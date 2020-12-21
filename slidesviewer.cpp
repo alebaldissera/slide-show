@@ -1,4 +1,5 @@
 #include "slidesviewer.h"
+#include "controller.h"
 
 QMenuBar * SlidesViewer::createMenu()
 {
@@ -13,14 +14,14 @@ QMenuBar * SlidesViewer::createMenu()
     QMenu *riproduzione = new QMenu("Riproduzione", menubar);
     menubar->addMenu(riproduzione);
 
-    QAction *inizio = new QAction("Inizio", riproduzione);
-    QAction *precendete = new QAction("Precedente", riproduzione);
-    QAction *successivo =new QAction("Successivo", riproduzione) ;
-    QAction *fine = new QAction("Fine", riproduzione);
-    QAction *autoplay = new QAction("Autoplay", riproduzione);
+    inizio = new QAction("Inizio", riproduzione);
+    precedente = new QAction("Precedente", riproduzione);
+    successivo =new QAction("Successivo", riproduzione) ;
+    fine = new QAction("Fine", riproduzione);
+    autoplay = new QAction("Autoplay", riproduzione);
 
     riproduzione->addAction(inizio);
-    riproduzione->addAction(precendete);
+    riproduzione->addAction(precedente);
     riproduzione->addAction(successivo);
     riproduzione->addAction(fine);
     riproduzione->addAction(autoplay);
@@ -28,9 +29,9 @@ QMenuBar * SlidesViewer::createMenu()
     QMenu *slides = new QMenu("Slides", menubar);
     menubar->addMenu(slides);
 
-    QAction *aggiungi = new QAction("Aggiungi", slides);
-    QAction *rimuovi = new QAction("Rimuovi", slides);
-    QAction *unisci = new QAction("Unisci", slides);
+    aggiungi = new QAction("Aggiungi", slides);
+    rimuovi = new QAction("Rimuovi", slides);
+    unisci = new QAction("Unisci", slides);
 
     slides->addAction(aggiungi);
     slides->addAction(rimuovi);
@@ -50,14 +51,38 @@ SlidesViewer::SlidesViewer(QWidget *parent) : QWidget(parent)
 
     mainLayout->addWidget(menubar);
 
+    QHBoxLayout *buttonsBox = new QHBoxLayout(this);
+    mainLayout->addLayout(buttonsBox);
+    QHBoxLayout *controlsBox = new QHBoxLayout(this);
+    buttonsBox->addLayout(controlsBox);
+
+    buttonsBox->setSpacing(150);
+    controlsBox->setSpacing(10);
+    controlsBox->setContentsMargins(20, 0, 20, 0);
+
+    inizioB = new QPushButton("Inizio", this);
+    precedenteB = new QPushButton("Precedente", this);
+    successivoB = new QPushButton("Successiva", this);
+    fineB = new QPushButton("Fine", this);
+
+    autoplayB = new QPushButton("Autoplay", this);
+
+    controlsBox->addWidget(inizioB);
+    controlsBox->addWidget(precedenteB);
+    controlsBox->addWidget(successivoB);
+    controlsBox->addWidget(fineB);
+
+    buttonsBox->addWidget(autoplayB);
+    buttonsBox->setContentsMargins(150, 5   , 150, 5);
+
     resize(QSize(800, 600)); //for low-res screen
     mainLayout->setSpacing(0);
     setLayout(mainLayout);
 
-    string path = "/home/alessandro/dadi.jpg";
+    /*string path = "/home/alessandro/dadi.jpg";
     auto m1 = SlideCreator::createSlide(path);
     auto m2 = SlideCreator::composeSlide(m1, SlideCreator::composeSlide(m1, m1, false));
-    showSlide(m2, 1, 1);
+    showSlide(m2, 1, 1);*/
 
 }
 
@@ -106,4 +131,26 @@ void SlidesViewer::showSlide(Slide *slide, u_int value, u_int limit)
 {
     screen->showSlide(slide);
     screen->updateProgressBar(value, limit);
+}
+
+void SlidesViewer::setController(Controller *c)
+{
+    controller = c;
+    //connettere i controlli dei menu con segnale triggered
+    connect(inizio, SIGNAL(triggered()), controller, SLOT(begin()));
+    connect(precedente, SIGNAL(triggered()), controller, SLOT(previous()));
+    connect(successivo, SIGNAL(triggered()), controller, SLOT(next()));
+    connect(fine, SIGNAL(triggered()), controller, SLOT(end()));
+    connect(autoplay, SIGNAL(triggered()), controller, SLOT(autoplay()));
+    connect(aggiungi, SIGNAL(triggered()), controller, SLOT(add()));
+    connect(rimuovi, SIGNAL(triggered()), controller, SLOT(remove()));
+    connect(unisci, SIGNAL(triggered()), controller, SLOT(merge()));
+
+    //connettere i controlli dei button con il segnale clicked
+
+    connect(inizioB, SIGNAL(clicked()), controller, SLOT(begin()));
+    connect(precedenteB, SIGNAL(clicked()), controller, SLOT(previous()));
+    connect(successivoB, SIGNAL(clicked()), controller, SLOT(next()));
+    connect(fineB, SIGNAL(clicked()), controller, SLOT(end()));
+    connect(autoplayB, SIGNAL(clicked()), controller, SLOT(autoplay()));
 }

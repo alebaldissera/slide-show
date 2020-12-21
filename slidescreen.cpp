@@ -24,30 +24,6 @@ SlideScreen::SlideScreen(QWidget *parent) : QWidget(parent)
     progresso->setFormat("%v / %m");
 
     main->addLayout(centrale);
-
-    QHBoxLayout *buttonsBox = new QHBoxLayout(this);
-    main->addLayout(buttonsBox);
-    QHBoxLayout *controlsBox = new QHBoxLayout(this);
-    buttonsBox->addLayout(controlsBox);
-
-    buttonsBox->setSpacing(150);
-    controlsBox->setSpacing(10);
-    controlsBox->setContentsMargins(20, 0, 20, 0);
-
-    QPushButton *inizio = new QPushButton("Inizio", this);
-    QPushButton *precedente = new QPushButton("Precedente", this);
-    QPushButton *successiva = new QPushButton("Successiva", this);
-    QPushButton *fine = new QPushButton("Fine", this);
-
-    QPushButton *autoplay = new QPushButton("Autoplay", this);
-
-    controlsBox->addWidget(inizio);
-    controlsBox->addWidget(precedente);
-    controlsBox->addWidget(successiva);
-    controlsBox->addWidget(fine);
-
-    buttonsBox->addWidget(autoplay);
-    buttonsBox->setContentsMargins(150, 5   , 150, 5);
 }
 
 void SlideScreen::showSlide(Slide *slide)
